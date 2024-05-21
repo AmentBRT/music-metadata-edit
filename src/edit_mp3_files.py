@@ -4,6 +4,8 @@ from mutagen.id3 import TIT2, TPE1, TALB, TCON, COMM, TDRC
 from tkinter import Tk, Label, Entry, Button, StringVar, Toplevel
 from tkinter.messagebox import showinfo
 
+from os.path import basename
+
 
 root = Tk()
 root.withdraw()
@@ -31,7 +33,9 @@ def edit_metadata(file_path, **kwargs):
 
 def show_form(audio):
     top = Toplevel(root)
-    top.title("Edit Metadata")
+
+    filename = basename(audio.filename)
+    top.title(f'Edit Metadata of "{filename}"')
 
     current_tags = get_tags(audio)
 
