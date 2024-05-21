@@ -23,7 +23,6 @@ def edit_metadata(file_path, **kwargs):
     for tag in ('Title', 'Artist', 'Album', 'Genre', 'Comment', 'Year'):
         if tag in kwargs:
             tags[tag] = kwargs[tag]
-            tags['Changed'] = True
 
     if len(tags) == 0:
         tags.update(show_form(audio))
@@ -59,8 +58,6 @@ def show_form(audio):
 
     Button(top, text='Save Changes', command=add_changes).grid(row=len(current_tags)+1, column=0, columnspan=2, pady=20)
 
-    for tag in entries.keys():
-        print(entries[tag].slaves())
     top.wait_window()
 
     return current_tags
