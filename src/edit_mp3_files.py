@@ -26,11 +26,7 @@ def edit_metadata(file_path, **kwargs):
     if len(tags) == 0:
         tags.update(show_form(audio))
 
-    if 'Changed' in tags:
-        save_changes(audio, tags)
-        return True
-
-    return False
+    save_changes(audio, tags)
 
 
 def show_form(audio):
