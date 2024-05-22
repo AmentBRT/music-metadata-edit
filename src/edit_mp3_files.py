@@ -40,7 +40,7 @@ def show_form(audio):
 
     entries = {}
     for i, (tag_name, value) in enumerate(current_tags.items()):
-        Label(top, text=tag_name + ':').grid(row=i, column=0, sticky='e')
+        Label(top, text=tag_name + ':').grid(row=i, column=0, sticky='w')
 
         var = StringVar(value=value)
         entry = Entry(top, textvariable=var)
