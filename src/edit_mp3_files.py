@@ -1,5 +1,5 @@
 from mutagen.id3 import ID3, ID3NoHeaderError
-from mutagen.id3 import TIT2, TPE1, TALB, TCON, COMM, TDRC
+from mutagen.id3 import TIT2, TPE1, TALB, TCON, COMM, TDRC, PCNT, TPE1, TPE2, TRCK
 
 from tkinter import Tk, Label, Entry, Button, StringVar, Toplevel
 from tkinter.messagebox import showinfo
@@ -20,7 +20,7 @@ def edit_metadata(file_path, **kwargs):
 
     tags = {}
 
-    for tag in ('Title', 'Artist', 'Album', 'Genre', 'Comment', 'Year'):
+    for tag in ('Title', 'Artist', 'Album', 'Genre', 'Comment', 'Year', 'Play_Counter', 'Album_Artist', 'Track_Number'):
         if tag in kwargs:
             tags[tag] = kwargs[tag]
 
@@ -71,6 +71,9 @@ def get_tags(audio):
         'Genre': audio.getall('TCON')[0][0] if len(audio.getall('TCON')) > 0 else '',
         'Comment': audio.getall('COMM::eng')[0][0] if len(audio.getall('COMM::eng')) > 0 else '',
         'Year': str(audio.getall('TDRC')[0][0]) if len(audio.getall('TDRC')) > 0 else '',
+        'Play_Counter': str(audio.getall('PCNT')[0].count) if len(audio.getall('PCNT')) > 0 else '',
+        'Album_Artist': str(audio.getall('TPE2')[0][0]) if len(audio.getall('TPE2')) > 0 else '',
+        'Track_Number': str(audio.getall('TRCK')[0][0]) if len(audio.getall('TRCK')) > 0 else '',
     }
 
 
@@ -89,6 +92,12 @@ def save_changes(audio, tags):
                 frame = COMM(encoding=3, text=var)
             case 'Year':
                 frame = TDRC(encoding=3, text=var)
+            case 'Play_Counter':
+                frame = PCNT(encoding=3, text=var)
+            case 'Album_Artist':
+                frame = TPE2(encoding=3, text=var)
+            case 'Track_Number':
+                frame = TRCK(encoding=3, text=var)
 
         audio.add(frame)
 
